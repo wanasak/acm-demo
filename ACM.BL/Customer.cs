@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ACM.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ACM.BL
 {
-    public class Customer
+    public class Customer : EntityBase, ILoggable
     {
         public Customer() : this(0)
         {
@@ -54,8 +55,9 @@ namespace ACM.BL
                 return fullName;
             }
         }
+        public int CustomerType { get; set; }
 
-        public bool Validate()
+        public override bool Validate()
         {
             var isValid = true;
 
@@ -63,6 +65,20 @@ namespace ACM.BL
             if (string.IsNullOrWhiteSpace(EmailAddress)) isValid = false;
 
             return isValid;
+        }
+
+        public string Log()
+        {
+            var logString = this.CustomerId + ": " +
+                                    this.FullName + " " +
+                                    "Email: " + this.EmailAddress + " " +
+                                    "Status: " + this.EntityState.ToString();
+            return logString;
+        }
+
+        public override string ToString()
+        {
+            return FullName;
         }
     }
 }

@@ -8,9 +8,17 @@ namespace ACM.BL
 {
     public class CustomerRepositoy
     {
+        private AddressRepository addressRepositry { get; set; }
+
+        public CustomerRepositoy()
+        {
+            addressRepositry = new AddressRepository();
+        }
+
         public Customer Retrive(int customerId)
         {
             var customer = new Customer(customerId);
+            customer.AddressList = addressRepositry.RetriveByCustomerId(customerId).ToList();
 
             if (customerId == 1)
             {
